@@ -18,12 +18,29 @@ class SplashScreen extends GetView<SplashScreenController> {
         decoration: BoxDecoration(
           color: AppColor.primary,
         ),
-        child: const Center(
-          child: ImageHelper(
-            imagePath: ImagePath.appIcon,
-            height: 140,
-            width: 140,
-            fit: BoxFit.contain,
+        child: Center(
+          child: ShaderMask(
+            shaderCallback: (bounds) {
+              return LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                stops: const [
+                  0.4,
+                  0.7,
+                ],
+                colors: [
+                  AppColor.secondary,
+                  AppColor.secondaryDark,
+                ],
+              ).createShader(bounds);
+            },
+            child: ImageHelper(
+              imagePath: ImagePath.appIcon,
+              color: AppColor.secondary,
+              height: 140,
+              width: 140,
+              fit: BoxFit.contain,
+            ),
           ),
         ),
       ),

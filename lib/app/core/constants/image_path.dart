@@ -1,6 +1,6 @@
 class ImagePath {
   // --> AppIcons
-  static const appIcon = 'assets/images/applogo.png';
+  static const appIcon = 'assets/images/appIcon.png';
   static const chatIcon = 'assets/images/chatIcon.png';
   // --> BottomBar Icons
   static const animeSelected = 'assets/images/anime_fill.png';
