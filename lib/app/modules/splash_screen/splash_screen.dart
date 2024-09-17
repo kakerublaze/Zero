@@ -1,15 +1,16 @@
 import 'package:zero/app/core/utils/exports.dart';
 import 'package:zero/app/core/utils/helpers/image_helper.dart';
 
-class SplashScreen extends GetView<SplashScreenController> {
+class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // final controller = Get.put(
-    //   SplashScreenController(),
-    //   permanent: true,
-    // );
+    // ignore: unused_local_variable
+    final controller = Get.put(
+      SplashScreenController(),
+      permanent: true,
+    );
     return Scaffold(
       backgroundColor: AppColor.primary,
       body: Container(

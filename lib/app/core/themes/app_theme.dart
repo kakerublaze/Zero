@@ -3,36 +3,36 @@ import 'package:zero/app/core/utils/exports.dart';
 class AppTheme {
   static ThemeData get lightTheme {
     return ThemeData(
-      scaffoldBackgroundColor: Colors.black,
+      scaffoldBackgroundColor: AppColor.primary,
       textTheme: GoogleFonts.poppinsTextTheme().apply(
         bodyColor: Colors.white,
         displayColor: Colors.white,
       ),
-      appBarTheme: const AppBarTheme(
-        backgroundColor: Colors.black,
+      appBarTheme: AppBarTheme(
+        backgroundColor: AppColor.primary,
         elevation: 0,
       ),
       inputDecorationTheme: const InputDecorationTheme(
         border: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: AppColor.white,
           ),
         ),
         enabledBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: AppColor.white,
           ),
         ),
         focusedBorder: OutlineInputBorder(
           borderSide: BorderSide(
-            color: Colors.white,
+            color: AppColor.white,
           ),
         ),
         labelStyle: TextStyle(
-          color: Colors.white,
+          color: AppColor.white,
         ),
         hintStyle: TextStyle(
-          color: Colors.white54,
+          color: AppColor.white54,
         ),
       ),
     );
