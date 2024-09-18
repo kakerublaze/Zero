@@ -1,8 +1,10 @@
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 class Endpoints {
   // --> Base URL
-  static const String baseUrl = 'consumet-api-repo.vercel.app';
-  static const String moviesBaseUrl = 'api.themoviedb.org/3';
-
+  static String baseUrl = dotenv.env['baseUrl'] ?? '';
+  static String moviesBaseUrl = dotenv.env['movieUrl'] ?? '';
+  static String imageBaseUrl = dotenv.env['imageUrl'] ?? '';
   // --> Airing Schedule API's
   static const String airingScheduleAnime = 'meta/anilist/airing-schedule';
   // --> Recent Anime Episode API's
@@ -29,24 +31,26 @@ class Endpoints {
   static const String asianTVStream = 'movies/dramacool/watch';
   // --> Asain TV Search
   static const String asianTVSearch = 'movies/dramacool';
+
   // --> Popular Movies
-  static const String popularMovies = 'movie/popular';
+  static const String popularMovies = '3/movie/popular';
   // --> Popular Celebs
-  static const String popularCelebs = '';
+  static const String popularCelebs = '3/person/popular';
   // --> Top Rated Movies
-  static const String topRatedMovies = 'movie/top_rated';
+  static const String topRatedMovies = '3/movie/top_rated';
   // --> Upcoming Movies
-  static const String upcomingMovies = 'movie/upcoming';
+  static const String upcomingMovies = '3/movie/upcoming';
   // --> Trending Movies
   static const String trendingMovies =
-      'trending/movie'; //{time_window} day/ week
+      '3/trending/movie'; //{time_window} day/ week
   // --> Trending Celebs
   static const String trendingCelebs =
-      'trending/person'; //{time_window}' day/ week
+      '3/trending/person'; //{time_window}' day/ week
   // --> Trending Series
-  static const String trendingSeries = 'trending/tv'; //{time_window}' day/ week
+  static const String trendingSeries =
+      '3/trending/tv'; //{time_window}' day/ week
   // --> Popular Series
-  static const String popularSeries = 'tv/popular';
+  static const String popularSeries = '3/tv/popular';
   // --> Top Rated Series
-  static const String topRatedSeries = 'tv/top_rated';
+  static const String topRatedSeries = '3/tv/top_rated';
 }
