@@ -1,3 +1,4 @@
+import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
 import 'package:zero/app/core/utils/helpers/image_helper.dart';
 import 'package:zero/app/global_widgets/shimmers/home_slider_shimmer_widget.dart';
@@ -45,11 +46,9 @@ class HomeScreen extends StatelessWidget {
                                 child: ImageHelper(
                                   height: Get.height * 0.5,
                                   width: Get.width,
-                                  imagePath: controller
-                                          .sliderData[
-                                              controller.currentIndex.value]
-                                          .image ??
-                                      '',
+                                  imagePath: controller.sliderData.isNotEmpty
+                                      ? '${Endpoints.imageBaseUrl}${controller.sliderData[controller.currentIndex.value].posterPath ?? ''}'
+                                      : '',
                                   fit: BoxFit.fill,
                                 ),
                               ),
@@ -91,11 +90,13 @@ class HomeScreen extends StatelessWidget {
                                     SizedBox(
                                       width: Get.width * 0.9,
                                       child: Text(
-                                        controller
-                                                .sliderData[controller
-                                                    .currentIndex.value]
-                                                .title ??
-                                            '',
+                                        controller.sliderData.isNotEmpty
+                                            ? controller
+                                                    .sliderData[controller
+                                                        .currentIndex.value]
+                                                    .title ??
+                                                ''
+                                            : '',
                                         style: const TextStyle(
                                           color: AppColor.white,
                                           fontSize: 26,
@@ -118,11 +119,14 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                           ),
                                           TextSpan(
-                                            text: controller
-                                                .sliderData[controller
-                                                    .currentIndex.value]
-                                                .rating
-                                                ?.toStringAsFixed(2),
+                                            text:
+                                                controller.sliderData.isNotEmpty
+                                                    ? controller
+                                                        .sliderData[controller
+                                                            .currentIndex.value]
+                                                        .voteAverage
+                                                        ?.toStringAsFixed(2)
+                                                    : '-/-',
                                             style: const TextStyle(
                                               color: AppColor.white,
                                               fontSize: 16,
@@ -205,7 +209,10 @@ class HomeScreen extends StatelessWidget {
                         child: ImageHelper(
                           width: 90,
                           height: 60,
-                          imagePath: controller.sliderData[index].image ?? '',
+                          imageHeight: 25,
+                          imageWidth: 25,
+                          imagePath:
+                              '${Endpoints.imageBaseUrl}${controller.sliderData[index].posterPath ?? ''}',
                           fit: BoxFit.fill,
                         ),
                       ),
@@ -282,7 +289,6 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
-                  
                 ],
               ).paddingOnly(
                 left: 10,

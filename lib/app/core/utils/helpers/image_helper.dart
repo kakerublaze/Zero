@@ -5,7 +5,9 @@ import 'package:zero/app/core/utils/exports.dart';
 class ImageHelper extends StatelessWidget {
   final String imagePath;
   final double? height;
+  final double? imageHeight;
   final double? width;
+  final double? imageWidth;
   final BoxFit fit;
   final double opacity;
   final Color? color;
@@ -14,7 +16,9 @@ class ImageHelper extends StatelessWidget {
     super.key,
     required this.imagePath,
     this.height,
+    this.imageHeight,
     this.width,
+    this.imageWidth,
     this.fit = BoxFit.cover,
     this.opacity = 1.0,
     this.color,
@@ -148,8 +152,8 @@ class ImageHelper extends StatelessWidget {
                 Center(
                   child: Image.asset(
                     ImagePath.brokenImageIcon,
-                    height: 40,
-                    width: 40,
+                    height: imageHeight ?? 40,
+                    width: imageWidth ?? 40,
                     fit: fit,
                     color: AppColor.white,
                   ),

@@ -139,7 +139,7 @@ class KnownFor {
     mediaType = json['media_type'];
     adult = json['adult'];
     originalLanguage = json['original_language'];
-    genreIds = json['genre_ids'].cast<int>();
+    genreIds = json['genre_ids']?.cast<int>();
     popularity = json['popularity'];
     releaseDate = json['release_date'];
     video = json['video'];
@@ -148,7 +148,7 @@ class KnownFor {
     name = json['name'];
     originalName = json['original_name'];
     firstAirDate = json['first_air_date'];
-    originCountry = json['origin_country'].cast<String>();
+    originCountry = json['origin_country']?.cast<String>();
   }
 
   Map<String, dynamic> toJson() {

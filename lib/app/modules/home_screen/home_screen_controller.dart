@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
 import 'package:zero/app/data/models/celebs/celebs_list_response_model.dart';
@@ -19,18 +20,20 @@ class HomeScreenController extends GetxController {
   CelebsResponseModel celebsResponseModel = CelebsResponseModel();
   RxList<CelebsDetails> trendingCelebsData = <CelebsDetails>[].obs;
   var loadingStates = <String, bool>{}.obs;
+  var token = dotenv.env['token'];
 
   //--> Get Slider Data
   Future<void> getSliderData() async {
     try {
       loadingStates['trending'] = true;
-      await restServices.getResponse(
-          isMovie: true,
-          uri: '${Endpoints.trendingMovies}/day',
-          method: Method.get,
-          queryParameters: {
-            'type': 'Movie',
-          }).then(
+      await restServices
+          .getResponse(
+        isMovie: true,
+        uri: '${Endpoints.trendingMovies}/day',
+        method: Method.get,
+        token: token,
+      )
+          .then(
         (response) {
           sliderResponseModel = MoviesResponseModel.fromJson(
             json.decode(
@@ -43,6 +46,21 @@ class HomeScreenController extends GetxController {
                   : sliderResponseModel.results) ??
               [];
           loadingStates['trending'] = false;
+          Timer.periodic(
+            const Duration(milliseconds: 1500),
+            (timer) {
+              currentIndex.value = (currentIndex.value + 1) % sliderData.length;
+              if (currentIndex.value < 5) {
+                sliderController.animateTo(
+                  (currentIndex * 100).toDouble(),
+                  duration: const Duration(
+                    milliseconds: 500,
+                  ),
+                  curve: Curves.easeInOut,
+                );
+              }
+            },
+          );
           sliderData.refresh();
         },
       );
@@ -60,13 +78,14 @@ class HomeScreenController extends GetxController {
   Future<void> getTrendingMovies() async {
     try {
       loadingStates['movies'] = true;
-      await restServices.getResponse(
-        uri: '${Endpoints.movieSearch}/trending',
+      await restServices
+          .getResponse(
+        uri: '${Endpoints.trendingMovies}/week',
         method: Method.get,
-        queryParameters: {
-          'type': 'Movie',
-        },
-      ).then(
+        token: token,
+        isMovie: true,
+      )
+          .then(
         (response) {
           moviesResponseModel = MoviesResponseModel.fromJson(
             json.decode(
@@ -93,13 +112,14 @@ class HomeScreenController extends GetxController {
   Future<void> getTrendingTvSeries() async {
     try {
       loadingStates['series'] = true;
-      await restServices.getResponse(
-        uri: '${Endpoints.movieSearch}/trending',
+      await restServices
+          .getResponse(
+        uri: '${Endpoints.trendingSeries}/day',
         method: Method.get,
-        queryParameters: {
-          'type': 'TV Series',
-        },
-      ).then(
+        token: token,
+        isMovie: true,
+      )
+          .then(
         (response) {
           tvSeriesResponseModel = MoviesResponseModel.fromJson(
             json.decode(
@@ -129,9 +149,9 @@ class HomeScreenController extends GetxController {
       await restServices
           .getResponse(
         isMovie: true,
-        uri: '/person/popular',
+        uri: Endpoints.popularCelebs,
         method: Method.get,
-        token: '',
+        token: token,
       )
           .then(
         (response) {
@@ -159,24 +179,10 @@ class HomeScreenController extends GetxController {
   @override
   Future<void> onInit() async {
     await getSliderData();
-    Timer.periodic(
-      const Duration(milliseconds: 1500),
-      (timer) {
-        currentIndex.value = (currentIndex.value + 1) % sliderData.length;
-        if (currentIndex.value < 5) {
-          sliderController.animateTo(
-            (currentIndex * 100).toDouble(),
-            duration: const Duration(
-              milliseconds: 500,
-            ),
-            curve: Curves.easeInOut,
-          );
-        }
-      },
-    );
-    getTrendingMovies();
-    getTrendingTvSeries();
-    getTrendingCelebs();
+
+    // getTrendingMovies();
+    // getTrendingTvSeries();
+    // getTrendingCelebs();
     super.onInit();
   }
 }
