@@ -20,7 +20,7 @@ class HomeScreen extends StatelessWidget {
           ),
           child: Column(
             children: [
-              controller.loadingStates['trending'] == true
+              controller.loadingStates['slider'] == true
                   ? getShimmerPlaceholder()
                   : Stack(
                       children: [
@@ -264,9 +264,10 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  // --> Popular Movies
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       const Text(
                         'Popular Movies',
@@ -289,6 +290,316 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ],
                   ),
+                  SizedBox(
+                    height: 300,
+                    width: Get.width,
+                    child: ListView.builder(
+                      itemCount: controller.popularMoviesData.length,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                          child: ImageHelper(
+                            imagePath:
+                                '${Endpoints.imageBaseUrl}${controller.popularMoviesData[index].posterPath}',
+                            height: 280,
+                            width: 160,
+                            fit: BoxFit.fill,
+                          ),
+                        ).paddingOnly(
+                          right: 10,
+                        );
+                      },
+                    ),
+                  ),
+                  30.heightBox,
+                  // --> Trending Series
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Trending Series',
+                        style: TextStyle(
+                          color: AppColor.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GradientText(
+                        'See all',
+                        gradient: [
+                          AppColor.secondary,
+                          AppColor.secondaryDark,
+                        ],
+                        stops: const [
+                          0.3,
+                          0.7,
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 300,
+                    width: Get.width,
+                    child: ListView.builder(
+                      itemCount: controller.trendingSeriesData.length,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                          child: ImageHelper(
+                            imagePath:
+                                '${Endpoints.imageBaseUrl}${controller.trendingSeriesData[index].posterPath}',
+                            height: 280,
+                            width: 160,
+                            fit: BoxFit.fill,
+                          ),
+                        ).paddingOnly(
+                          right: 10,
+                        );
+                      },
+                    ),
+                  ),
+                  30.heightBox,
+                  // --> Popular Series
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Popular Series',
+                        style: TextStyle(
+                          color: AppColor.white,
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      GradientText(
+                        'See all',
+                        gradient: [
+                          AppColor.secondary,
+                          AppColor.secondaryDark,
+                        ],
+                        stops: const [
+                          0.3,
+                          0.7,
+                        ],
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 300,
+                    width: Get.width,
+                    child: ListView.builder(
+                      itemCount: controller.popularSeriesData.length,
+                      shrinkWrap: true,
+                      padding: const EdgeInsets.only(
+                        top: 20,
+                      ),
+                      scrollDirection: Axis.horizontal,
+                      physics: const BouncingScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        return ClipRRect(
+                          borderRadius: BorderRadius.circular(
+                            10,
+                          ),
+                          child: ImageHelper(
+                            imagePath:
+                                '${Endpoints.imageBaseUrl}${controller.popularSeriesData[index].posterPath}',
+                            height: 280,
+                            width: 160,
+                            fit: BoxFit.fill,
+                          ),
+                        ).paddingOnly(
+                          right: 10,
+                        );
+                      },
+                    ),
+                  ),
+                  // 30.heightBox,
+                  // --> Trending Anime
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     const Text(
+                  //       'Trending Anime',
+                  //       style: TextStyle(
+                  //         color: AppColor.white,
+                  //         fontSize: 24,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     GradientText(
+                  //       'See all',
+                  //       gradient: [
+                  //         AppColor.secondary,
+                  //         AppColor.secondaryDark,
+                  //       ],
+                  //       stops: const [
+                  //         0.3,
+                  //         0.7,
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 300,
+                  //   width: Get.width,
+                  //   child: ListView.builder(
+                  //     itemCount: controller.popularMoviesData.length,
+                  //     shrinkWrap: true,
+                  //     padding: const EdgeInsets.only(
+                  //       top: 20,
+                  //     ),
+                  //     scrollDirection: Axis.horizontal,
+                  //     physics: const BouncingScrollPhysics(),
+                  //     itemBuilder: (context, index) {
+                  //       return ClipRRect(
+                  //         borderRadius: BorderRadius.circular(
+                  //           10,
+                  //         ),
+                  //         child: ImageHelper(
+                  //           imagePath:
+                  //               '${Endpoints.imageBaseUrl}${controller.popularMoviesData[index].posterPath}',
+                  //           height: 280,
+                  //           width: 160,
+                  //           fit: BoxFit.fill,
+                  //         ),
+                  //       ).paddingOnly(
+                  //         right: 10,
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  // 30.heightBox,
+                  // --> Popular Anime's
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     const Text(
+                  //       'Popular Anime',
+                  //       style: TextStyle(
+                  //         color: AppColor.white,
+                  //         fontSize: 24,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     GradientText(
+                  //       'See all',
+                  //       gradient: [
+                  //         AppColor.secondary,
+                  //         AppColor.secondaryDark,
+                  //       ],
+                  //       stops: const [
+                  //         0.3,
+                  //         0.7,
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 300,
+                  //   width: Get.width,
+                  //   child: ListView.builder(
+                  //     itemCount: controller.popularMoviesData.length,
+                  //     shrinkWrap: true,
+                  //     padding: const EdgeInsets.only(
+                  //       top: 20,
+                  //     ),
+                  //     scrollDirection: Axis.horizontal,
+                  //     physics: const BouncingScrollPhysics(),
+                  //     itemBuilder: (context, index) {
+                  //       return ClipRRect(
+                  //         borderRadius: BorderRadius.circular(
+                  //           10,
+                  //         ),
+                  //         child: ImageHelper(
+                  //           imagePath:
+                  //               '${Endpoints.imageBaseUrl}${controller.popularMoviesData[index].posterPath}',
+                  //           height: 280,
+                  //           width: 160,
+                  //           fit: BoxFit.fill,
+                  //         ),
+                  //       ).paddingOnly(
+                  //         right: 10,
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  // 30.heightBox,
+                  // --> Trending Celebs
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   crossAxisAlignment: CrossAxisAlignment.center,
+                  //   children: [
+                  //     const Text(
+                  //       'Trending Celebirity',
+                  //       style: TextStyle(
+                  //         color: AppColor.white,
+                  //         fontSize: 24,
+                  //         fontWeight: FontWeight.w500,
+                  //       ),
+                  //     ),
+                  //     GradientText(
+                  //       'See all',
+                  //       gradient: [
+                  //         AppColor.secondary,
+                  //         AppColor.secondaryDark,
+                  //       ],
+                  //       stops: const [
+                  //         0.3,
+                  //         0.7,
+                  //       ],
+                  //     ),
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   height: 300,
+                  //   width: Get.width,
+                  //   child: ListView.builder(
+                  //     itemCount: controller.popularMoviesData.length,
+                  //     shrinkWrap: true,
+                  //     padding: const EdgeInsets.only(
+                  //       top: 20,
+                  //     ),
+                  //     scrollDirection: Axis.horizontal,
+                  //     physics: const BouncingScrollPhysics(),
+                  //     itemBuilder: (context, index) {
+                  //       return ClipRRect(
+                  //         borderRadius: BorderRadius.circular(
+                  //           10,
+                  //         ),
+                  //         child: ImageHelper(
+                  //           imagePath:
+                  //               '${Endpoints.imageBaseUrl}${controller.popularMoviesData[index].posterPath}',
+                  //           height: 280,
+                  //           width: 160,
+                  //           fit: BoxFit.fill,
+                  //         ),
+                  //       ).paddingOnly(
+                  //         right: 10,
+                  //       );
+                  //     },
+                  //   ),
+                  // ),
+                  120.heightBox,
                 ],
               ).paddingOnly(
                 left: 10,

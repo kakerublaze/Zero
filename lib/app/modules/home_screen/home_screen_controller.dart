@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
 import 'package:zero/app/data/models/celebs/celebs_list_response_model.dart';
+import 'package:zero/app/data/models/series/series_list_response_model.dart';
 
 class HomeScreenController extends GetxController {
   RestServices restServices = RestServices();
@@ -13,10 +14,14 @@ class HomeScreenController extends GetxController {
   //--> Home Page Data List's Variables
   MoviesResponseModel sliderResponseModel = MoviesResponseModel();
   RxList<MoviesData> sliderData = <MoviesData>[].obs;
-  MoviesResponseModel moviesResponseModel = MoviesResponseModel();
-  RxList<MoviesData> trendingMoviesData = <MoviesData>[].obs;
-  MoviesResponseModel tvSeriesResponseModel = MoviesResponseModel();
-  RxList<MoviesData> trendingTVSeriesData = <MoviesData>[].obs;
+  MoviesResponseModel popularMoviesResponseModel = MoviesResponseModel();
+  RxList<MoviesData> popularMoviesData = <MoviesData>[].obs;
+  SeriesResponseModel seriesResponseModel = SeriesResponseModel();
+  RxList<SeriesData> trendingSeriesData = <SeriesData>[].obs;
+  SeriesResponseModel popularSeriesResponseModel = SeriesResponseModel();
+  RxList<SeriesData> popularSeriesData = <SeriesData>[].obs;
+  SeriesResponseModel trendingAnimeResponseModel = SeriesResponseModel();
+  RxList<SeriesData> trendingAnimeData = <SeriesData>[].obs;
   CelebsResponseModel celebsResponseModel = CelebsResponseModel();
   RxList<CelebsDetails> trendingCelebsData = <CelebsDetails>[].obs;
   var loadingStates = <String, bool>{}.obs;
@@ -25,7 +30,7 @@ class HomeScreenController extends GetxController {
   //--> Get Slider Data
   Future<void> getSliderData() async {
     try {
-      loadingStates['trending'] = true;
+      loadingStates['slider'] = true;
       await restServices
           .getResponse(
         isMovie: true,
@@ -45,73 +50,77 @@ class HomeScreenController extends GetxController {
                   ? sliderResponseModel.results?.sublist(0, 7)
                   : sliderResponseModel.results) ??
               [];
-          loadingStates['trending'] = false;
-          Timer.periodic(
-            const Duration(milliseconds: 1500),
-            (timer) {
-              currentIndex.value = (currentIndex.value + 1) % sliderData.length;
-              if (currentIndex.value < 5) {
-                sliderController.animateTo(
-                  (currentIndex * 100).toDouble(),
-                  duration: const Duration(
-                    milliseconds: 500,
-                  ),
-                  curve: Curves.easeInOut,
-                );
-              }
-            },
-          );
+          loadingStates['slider'] = false;
+          if (sliderData.isNotEmpty) {
+            Timer.periodic(
+              const Duration(milliseconds: 1500),
+              (timer) {
+                currentIndex.value =
+                    (currentIndex.value + 1) % sliderData.length;
+                if (currentIndex.value < 5) {
+                  sliderController.animateTo(
+                    (currentIndex * 100).toDouble(),
+                    duration: const Duration(
+                      milliseconds: 500,
+                    ),
+                    curve: Curves.easeInOut,
+                  );
+                }
+              },
+            );
+          }
           sliderData.refresh();
         },
       );
     } catch (e) {
-      loadingStates['trending'] = false;
+      loadingStates['slider'] = false;
       logger.e(
         e,
       );
     } finally {
-      loadingStates['trending'] = false;
+      loadingStates['slider'] = false;
     }
   }
 
-  //--> Get Trending Movies
-  Future<void> getTrendingMovies() async {
+  //--> Get Popular Movies
+  Future<void> getPopularMovies() async {
     try {
-      loadingStates['movies'] = true;
-      await restServices
-          .getResponse(
-        uri: '${Endpoints.trendingMovies}/week',
+      loadingStates['popMovies'] = true;
+      await restServices.getResponse(
+        uri: Endpoints.popularMovies,
         method: Method.get,
         token: token,
         isMovie: true,
-      )
-          .then(
+        queryParameters: {
+          'page': '1',
+        },
+      ).then(
         (response) {
-          moviesResponseModel = MoviesResponseModel.fromJson(
+          popularMoviesResponseModel = MoviesResponseModel.fromJson(
             json.decode(
               response,
             ),
           );
 
-          trendingMoviesData.value = moviesResponseModel.results ?? [];
-          loadingStates['movies'] = false;
-          trendingMoviesData.refresh();
+          popularMoviesData.value = popularMoviesResponseModel.results ?? [];
+          loadingStates['popMovies'] = false;
+          popularMoviesData.refresh();
         },
       );
     } catch (e) {
-      loadingStates['movies'] = false;
+      loadingStates['popMovies'] = false;
       logger.e(
         e,
       );
     } finally {
-      loadingStates['movies'] = false;
+      loadingStates['popMovies'] = false;
     }
   }
 
-  //--> Get Trending TV Series
-  Future<void> getTrendingTvSeries() async {
+  //--> Get Trending Series
+  Future<void> getTrendingSeries() async {
     try {
-      loadingStates['series'] = true;
+      loadingStates['trendingSeries'] = true;
       await restServices
           .getResponse(
         uri: '${Endpoints.trendingSeries}/day',
@@ -121,24 +130,93 @@ class HomeScreenController extends GetxController {
       )
           .then(
         (response) {
-          tvSeriesResponseModel = MoviesResponseModel.fromJson(
+          seriesResponseModel = SeriesResponseModel.fromJson(
             json.decode(
               response,
             ),
           );
 
-          trendingTVSeriesData.value = tvSeriesResponseModel.results ?? [];
-          loadingStates['series'] = false;
-          trendingTVSeriesData.refresh();
+          trendingSeriesData.value = seriesResponseModel.results ?? [];
+          loadingStates['trendingSeries'] = false;
+          trendingSeriesData.refresh();
         },
       );
     } catch (e) {
-      loadingStates['series'] = false;
+      loadingStates['trendingSeries'] = false;
       logger.e(
         e,
       );
     } finally {
-      loadingStates['series'] = false;
+      loadingStates['trendingSeries'] = false;
+    }
+  }
+
+  //--> Get Popular Series
+  Future<void> getPopularSeries() async {
+    try {
+      loadingStates['popularSeries'] = true;
+      await restServices
+          .getResponse(
+        uri: Endpoints.popularSeries,
+        method: Method.get,
+        token: token,
+        isMovie: true,
+      )
+          .then(
+        (response) {
+          popularSeriesResponseModel = SeriesResponseModel.fromJson(
+            json.decode(
+              response,
+            ),
+          );
+
+          popularSeriesData.value = popularSeriesResponseModel.results ?? [];
+          loadingStates['popularSeries'] = false;
+          popularSeriesData.refresh();
+        },
+      );
+    } catch (e) {
+      loadingStates['popularSeries'] = false;
+      logger.e(
+        e,
+      );
+    } finally {
+      loadingStates['popularSeries'] = false;
+    }
+  }
+
+  //--> Get Trending Animes
+  Future<void> getTrendingAnime() async {
+    try {
+      loadingStates['trendingAnime'] = true;
+      await restServices.getResponse(
+        uri: Endpoints.animeSearch,
+        method: Method.get,
+        queryParameters: {
+          'page': '1',
+          'perPage': 20.toString(),
+          'sort': '["TRENDING_DESC"]',
+        },
+      ).then(
+        (response) {
+          popularSeriesResponseModel = SeriesResponseModel.fromJson(
+            json.decode(
+              response,
+            ),
+          );
+
+          popularSeriesData.value = popularSeriesResponseModel.results ?? [];
+          loadingStates['trendingAnime'] = false;
+          popularSeriesData.refresh();
+        },
+      );
+    } catch (e) {
+      loadingStates['trendingAnime'] = false;
+      logger.e(
+        e,
+      );
+    } finally {
+      loadingStates['trendingAnime'] = false;
     }
   }
 
@@ -179,9 +257,9 @@ class HomeScreenController extends GetxController {
   @override
   Future<void> onInit() async {
     await getSliderData();
-
-    // getTrendingMovies();
-    // getTrendingTvSeries();
+    getPopularMovies();
+    getTrendingSeries();
+    getPopularSeries();
     // getTrendingCelebs();
     super.onInit();
   }
