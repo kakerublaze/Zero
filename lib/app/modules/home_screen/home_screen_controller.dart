@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
+import 'package:zero/app/data/models/animes/trending_anime_response_model.dart';
 import 'package:zero/app/data/models/celebs/celebs_list_response_model.dart';
 import 'package:zero/app/data/models/series/series_list_response_model.dart';
 
@@ -20,10 +21,16 @@ class HomeScreenController extends GetxController {
   RxList<SeriesData> trendingSeriesData = <SeriesData>[].obs;
   SeriesResponseModel popularSeriesResponseModel = SeriesResponseModel();
   RxList<SeriesData> popularSeriesData = <SeriesData>[].obs;
-  SeriesResponseModel trendingAnimeResponseModel = SeriesResponseModel();
-  RxList<SeriesData> trendingAnimeData = <SeriesData>[].obs;
+  TrendingAnimeResponseModel trendingAnimeResponseModel =
+      TrendingAnimeResponseModel();
+  RxList<TrendingAnimeData> trendingAnimeData = <TrendingAnimeData>[].obs;
+  TrendingAnimeResponseModel popularAnimeResponseModel =
+      TrendingAnimeResponseModel();
+  RxList<TrendingAnimeData> popularAnimeData = <TrendingAnimeData>[].obs;
   CelebsResponseModel celebsResponseModel = CelebsResponseModel();
   RxList<CelebsDetails> trendingCelebsData = <CelebsDetails>[].obs;
+  // Rx<Timer?> sliderTimer = Rx<Timer?>(null);
+
   var loadingStates = <String, bool>{}.obs;
   var token = dotenv.env['token'];
 
@@ -51,24 +58,29 @@ class HomeScreenController extends GetxController {
                   : sliderResponseModel.results) ??
               [];
           loadingStates['slider'] = false;
-          if (sliderData.isNotEmpty) {
-            Timer.periodic(
-              const Duration(milliseconds: 1500),
-              (timer) {
-                currentIndex.value =
-                    (currentIndex.value + 1) % sliderData.length;
-                if (currentIndex.value < 5) {
-                  sliderController.animateTo(
-                    (currentIndex * 100).toDouble(),
-                    duration: const Duration(
-                      milliseconds: 500,
-                    ),
-                    curve: Curves.easeInOut,
-                  );
-                }
-              },
-            );
-          }
+
+          // Cancel the existing timer if it's running
+          // sliderTimer.value?.cancel();
+
+          // if (sliderData.isNotEmpty &&
+          //     Get.find<MainScreenController>().selectedIndex.value == 0) {
+          //   sliderTimer.value = Timer.periodic(
+          //     const Duration(milliseconds: 1500),
+          //     (timer) {
+          //       currentIndex.value =
+          //           (currentIndex.value + 1) % sliderData.length;
+          //       if (currentIndex.value < 5) {
+          //         sliderController.animateTo(
+          //           (currentIndex * 100).toDouble(),
+          //           duration: const Duration(
+          //             milliseconds: 500,
+          //           ),
+          //           curve: Curves.easeInOut,
+          //         );
+          //       }
+          //     },
+          //   );
+          // }
           sliderData.refresh();
         },
       );
@@ -196,18 +208,19 @@ class HomeScreenController extends GetxController {
           'page': '1',
           'perPage': 20.toString(),
           'sort': '["TRENDING_DESC"]',
+          'format': 'TV',
         },
       ).then(
         (response) {
-          popularSeriesResponseModel = SeriesResponseModel.fromJson(
+          trendingAnimeResponseModel = TrendingAnimeResponseModel.fromJson(
             json.decode(
               response,
             ),
           );
 
-          popularSeriesData.value = popularSeriesResponseModel.results ?? [];
+          trendingAnimeData.value = trendingAnimeResponseModel.results ?? [];
           loadingStates['trendingAnime'] = false;
-          popularSeriesData.refresh();
+          trendingAnimeData.refresh();
         },
       );
     } catch (e) {
@@ -220,6 +233,42 @@ class HomeScreenController extends GetxController {
     }
   }
 
+  //--> Get Popular Animes
+  Future<void> getPopularAnime() async {
+    try {
+      loadingStates['popularAnime'] = true;
+      await restServices.getResponse(
+        uri: Endpoints.animeSearch,
+        method: Method.get,
+        queryParameters: {
+          'page': '1',
+          'perPage': 20.toString(),
+          'sort': '["POPULARITY_DESC"]',
+          'format': 'TV',
+        },
+      ).then(
+        (response) {
+          popularAnimeResponseModel = TrendingAnimeResponseModel.fromJson(
+            json.decode(
+              response,
+            ),
+          );
+
+          popularAnimeData.value = popularAnimeResponseModel.results ?? [];
+          loadingStates['popularAnime'] = false;
+          popularAnimeData.refresh();
+        },
+      );
+    } catch (e) {
+      loadingStates['popularAnime'] = false;
+      logger.e(
+        e,
+      );
+    } finally {
+      loadingStates['popularAnime'] = false;
+    }
+  }
+
   //--> Get Trending Celebs
   Future<void> getTrendingCelebs() async {
     try {
@@ -227,7 +276,7 @@ class HomeScreenController extends GetxController {
       await restServices
           .getResponse(
         isMovie: true,
-        uri: Endpoints.popularCelebs,
+        uri: '${Endpoints.trendingCelebs}/day',
         method: Method.get,
         token: token,
       )
@@ -260,7 +309,9 @@ class HomeScreenController extends GetxController {
     getPopularMovies();
     getTrendingSeries();
     getPopularSeries();
-    // getTrendingCelebs();
+    getTrendingAnime();
+    getPopularAnime();
+    getTrendingCelebs();
     super.onInit();
   }
 }

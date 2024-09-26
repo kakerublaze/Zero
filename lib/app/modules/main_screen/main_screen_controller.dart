@@ -14,12 +14,16 @@ class MainScreenController extends GetxController {
   ];
 
   void _scrollListener() {
-    if (scrollController.position.pixels >= 140) {
-      isScrolled.value = true;
-      isScrolled.refresh();
-    } else {
-      isScrolled.value = false;
-      isScrolled.refresh();
+    debugPrint(scrollController.position.pixels
+        .toString()); // Log the scroll position to debug
+    if (selectedIndex.value == 0) {
+      if (scrollController.position.pixels >= 140) {
+        isScrolled.value = true;
+        isScrolled.refresh();
+      } else {
+        isScrolled.value = false;
+        isScrolled.refresh();
+      }
     }
   }
 
