@@ -15,8 +15,38 @@ class MainScreen extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         extendBodyBehindAppBar: true,
         extendBody: true,
-        appBar: controller.isScrolled.value
-            ? PreferredSize(
+        appBar: controller.selectedIndex.value == 0
+            ? controller.isScrolled.value
+                ? PreferredSize(
+                    preferredSize: Size(
+                      Get.width,
+                      60,
+                    ),
+                    child: ClipRRect(
+                      child: BackdropFilter(
+                        filter: ImageFilter.blur(
+                          sigmaX: 5,
+                          sigmaY: 5,
+                        ),
+                        child: AppBar(
+                          backgroundColor: AppColor.black.withOpacity(
+                            0.8,
+                          ),
+                          elevation: 0.0,
+                          title: const Text(
+                            'Zero',
+                          ),
+                          titleTextStyle: const TextStyle(
+                            color: AppColor.white,
+                            fontSize: 24,
+                            fontWeight: FontWeight.w800,
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                : null
+            : PreferredSize(
                 preferredSize: Size(
                   Get.width,
                   60,
@@ -32,8 +62,8 @@ class MainScreen extends StatelessWidget {
                         0.8,
                       ),
                       elevation: 0.0,
-                      title: const Text(
-                        'Zero',
+                      title: Text(
+                        controller.tabsName[controller.selectedIndex.value],
                       ),
                       titleTextStyle: const TextStyle(
                         color: AppColor.white,
@@ -43,8 +73,7 @@ class MainScreen extends StatelessWidget {
                     ),
                   ),
                 ),
-              )
-            : null,
+              ),
         body: Stack(
           children: [
             SingleChildScrollView(
@@ -99,10 +128,12 @@ class MainScreen extends StatelessWidget {
                           );
                           return;
                         }
-                        controller.scrollController.jumpTo(
-                          0,
-                        );
                         controller.selectedIndex.value = index;
+                        // controller.scrollController.animateTo(
+                        //   controller.scrollController.position.minScrollExtent,
+                        //   duration: const Duration(milliseconds: 500),
+                        //   curve: Curves.fastLinearToSlowEaseIn,
+                        // );
                         controller.selectedIndex.refresh();
                         // if (controller.selectedIndex.value != 0) {
                         //   controller.selectedIndex.listen(
