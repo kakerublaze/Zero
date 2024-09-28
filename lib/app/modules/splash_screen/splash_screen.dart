@@ -1,5 +1,4 @@
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/core/utils/helpers/image_helper.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});

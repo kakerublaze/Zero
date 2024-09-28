@@ -19,7 +19,7 @@ class MainScreenController extends GetxController {
     'Zero',
     'Asian TV',
     'Explore',
-    'News',
+    'Zero News',
     'Profile',
   ];
 

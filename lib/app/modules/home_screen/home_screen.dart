@@ -1,7 +1,6 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/core/utils/helpers/image_helper.dart';
 import 'package:zero/app/global_widgets/shimmers/home_slider_shimmer_widget.dart';
 import 'package:zero/app/global_widgets/text/gradient_text.dart';
 

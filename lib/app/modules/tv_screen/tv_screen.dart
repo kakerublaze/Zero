@@ -37,8 +37,8 @@ class TvScreen extends StatelessWidget {
                           borderRadius: BorderRadius.circular(
                             10,
                           ),
-                          child: Image.network(
-                            item.image ?? '',
+                          child: ImageHelper(
+                            imagePath: item.image ?? '',
                             height: 200,
                             width: double.infinity,
                             fit: BoxFit.cover,

@@ -14,8 +14,8 @@ export 'package:flutter/services.dart'; // Service Package
 export 'package:zero/app/core/utils/extensions.dart'; // Extension's
 export 'package:zero/app/core/utils/helpers/dependency_injectors.dart'; // Dependency Injector's
 export 'package:zero/app/core/utils/helpers/hex_color_coverter.dart'; // Hex Color Converter
-export 'package:zero/app/core/utils/helpers/global_variables.dart'; // Global Variable's 
-
+export 'package:zero/app/core/utils/helpers/global_variables.dart'; // Global Variable's
+export 'package:zero/app/core/utils/helpers/image_helper.dart';
 
 //--> App Constanst
 export 'package:zero/app/core/constants/app_colors.dart'; // App Color's
@@ -34,7 +34,6 @@ export 'package:zero/app/data/enums/services_enums.dart'; // Enum's
 //--> Service's
 export 'package:zero/app/data/services/rest_services.dart'; // Services
 
-
 //--> Module's
 //--> Splash Screen
 export 'package:zero/app/modules/splash_screen/splash_screen_controller.dart'; // Splash Screen Controller
@@ -49,6 +48,9 @@ export 'package:zero/app/modules/main_screen/main_screen_controller.dart'; // Ma
 //--> Home Screen
 export 'package:zero/app/modules/home_screen/home_screen.dart'; // Home Screen View
 export 'package:zero/app/modules/home_screen/home_screen_controller.dart'; // Home Screen Controller
+
+//--> News Screen
+export 'package:zero/app/modules/news_screen/news_screen_controller.dart';
 
 // Models
 export 'package:zero/app/data/models/movies/movies_list_response_model.dart'; // Movies Response Model
