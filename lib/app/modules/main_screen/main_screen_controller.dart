@@ -19,13 +19,14 @@ class MainScreenController extends GetxController {
     'Zero',
     'Asian TV',
     'Explore',
-    'Zero News',
+    'Anime News',
     'Profile',
   ];
 
   void _scrollListener() {
-    debugPrint(scrollController.position.pixels
-        .toString()); // Log the scroll position to debug
+    debugPrint(
+      scrollController.position.pixels.toString(),
+    ); // Log the scroll position to debug
     if (selectedIndex.value == 0) {
       if (scrollController.position.pixels >= 140) {
         isScrolled.value = true;

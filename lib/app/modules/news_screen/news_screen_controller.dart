@@ -8,15 +8,32 @@ class NewsScreenController extends GetxController {
   RestServices restServices = RestServices();
   RxBool isLoadingData = false.obs;
   RxList<NewsResponseList> newsDataList = <NewsResponseList>[].obs;
+  RxInt selectedIndex = 0.obs;
+  RxList<String> newsTypesList = <String>[
+    "All",
+    "Anime",
+    "Animation",
+    "Manga",
+    "Games",
+    "Novels",
+    "Live-action",
+    "Covid-19",
+    "Industry",
+    "Music",
+    "People",
+    "Merch",
+    "Events",
+  ].obs;
 
-  Future<void> newsFeedData() async {
+  Future<void> newsFeedData({String? newsType}) async {
     isLoadingData.value = true;
-    await restServices
-        .getResponse(
+    await restServices.getResponse(
       uri: Endpoints.newsData,
       method: Method.get,
-    )
-        .then(
+      queryParameters: {
+        'topic': (newsType ?? '').toLowerCase(),
+      },
+    ).then(
       (response) {
         if (response != '') {
           newsDataList.value = (json.decode(response) as List)
