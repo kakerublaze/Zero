@@ -305,6 +305,13 @@ class HomeScreenController extends GetxController {
 
   @override
   Future<void> onInit() async {
+    loadingStates['slider'] = true;
+    loadingStates['popMovies'] = true;
+    loadingStates['trendingSeriesslider'] = true;
+    loadingStates['popularSeries'] = true;
+    loadingStates['trendingAnime'] = true;
+    loadingStates['popularAnime'] = true;
+    loadingStates['celebs'] = true;
     await getSliderData();
     getPopularMovies();
     getTrendingSeries();
