@@ -583,11 +583,11 @@ class HomeScreen extends StatelessWidget {
                                 controller.trendingAnimeData[index].title
                                         ?.english ??
                                     controller.trendingAnimeData[index].title
+                                        ?.userPreferred ??
+                                    controller.trendingAnimeData[index].title
                                         ?.native ??
                                     controller.trendingAnimeData[index].title
                                         ?.romaji ??
-                                    controller.trendingAnimeData[index].title
-                                        ?.userPreferred ??
                                     '',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
@@ -672,11 +672,11 @@ class HomeScreen extends StatelessWidget {
                                 controller.popularAnimeData[index].title
                                         ?.english ??
                                     controller.popularAnimeData[index].title
+                                        ?.userPreferred ??
+                                    controller.popularAnimeData[index].title
                                         ?.native ??
                                     controller.popularAnimeData[index].title
                                         ?.romaji ??
-                                    controller.popularAnimeData[index].title
-                                        ?.userPreferred ??
                                     '',
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,

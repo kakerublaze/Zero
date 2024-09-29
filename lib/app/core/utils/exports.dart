@@ -15,7 +15,7 @@ export 'package:zero/app/core/utils/extensions.dart'; // Extension's
 export 'package:zero/app/core/utils/helpers/dependency_injectors.dart'; // Dependency Injector's
 export 'package:zero/app/core/utils/helpers/hex_color_coverter.dart'; // Hex Color Converter
 export 'package:zero/app/core/utils/helpers/global_variables.dart'; // Global Variable's
-export 'package:zero/app/core/utils/helpers/image_helper.dart';
+export 'package:zero/app/core/utils/helpers/image_helper.dart'; // Image Helper
 
 //--> App Constanst
 export 'package:zero/app/core/constants/app_colors.dart'; // App Color's
@@ -50,7 +50,11 @@ export 'package:zero/app/modules/home_screen/home_screen.dart'; // Home Screen V
 export 'package:zero/app/modules/home_screen/home_screen_controller.dart'; // Home Screen Controller
 
 //--> News Screen
-export 'package:zero/app/modules/news_screen/news_screen_controller.dart';
+export 'package:zero/app/modules/news_screen/news_screen_controller.dart'; // News Screen Controller
+
+//--> TV Screen
+export 'package:zero/app/global_widgets/shimmers/tv_screen_shimmer_widget.dart'; // TV Screen Shimmer Effect
+export 'package:zero/app/modules/tv_screen/tv_screen_controller.dart'; // TV Screen Controller
 
 // Models
 export 'package:zero/app/data/models/movies/movies_list_response_model.dart'; // Movies Response Model

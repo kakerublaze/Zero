@@ -33,7 +33,7 @@ class RestServices {
     required String uri,
     required Method method,
     bool isMovie = false,
-    Map<String, String>? queryParameters,
+    Map<String, dynamic>? queryParameters,
     String? body,
     String? token,
     handleTokenExpire = false,

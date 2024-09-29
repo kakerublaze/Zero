@@ -8,7 +8,11 @@ class AsianTvResponseModel {
       {this.currentPage, this.totalPages, this.hasNextPage, this.results});
 
   AsianTvResponseModel.fromJson(Map<String, dynamic> json) {
-    currentPage = json['currentPage'];
+    currentPage = json['currentPage'] != null
+        ? int.parse(
+            json['currentPage'],
+          )
+        : json['currentPage'];
     totalPages = json['totalPages'];
     hasNextPage = json['hasNextPage'];
     if (json['results'] != null) {
