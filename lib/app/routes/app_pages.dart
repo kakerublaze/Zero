@@ -16,5 +16,10 @@ class AppPages {
       page: () => const MainScreen(),
       binding: MainScreenBinding(),
     ),
+    GetPage(
+      name: Routes.detailsScreen,
+      page: () => const DetailsScreen(),
+      binding: DetailsScreenBinding(),
+    ),
   ];
 }

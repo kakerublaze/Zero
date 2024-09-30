@@ -355,6 +355,18 @@ class HomeScreen extends StatelessWidget {
                                 ).paddingOnly(
                                   right: 15,
                                 ),
+                              ).onTap(
+                                () {
+                                  Get.toNamed(
+                                    Routes.detailsScreen,
+                                    arguments: {
+                                      'id': controller
+                                          .popularMoviesData[index].id,
+                                      'title': controller
+                                          .popularMoviesData[index].title,
+                                    },
+                                  );
+                                },
                               );
                             },
                           ),

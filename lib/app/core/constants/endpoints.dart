@@ -40,6 +40,8 @@ class Endpoints {
   static const String topRatedMovies = '3/movie/top_rated';
   // --> Upcoming Movies
   static const String upcomingMovies = '3/movie/upcoming';
+  // --> Movies Details
+  static const String moviesDetails = '3/movie';
   // --> Trending Movies
   static const String trendingMovies =
       '3/trending/movie'; //{time_window} day/ week

@@ -56,5 +56,10 @@ export 'package:zero/app/modules/news_screen/news_screen_controller.dart'; // Ne
 export 'package:zero/app/global_widgets/shimmers/tv_screen_shimmer_widget.dart'; // TV Screen Shimmer Effect
 export 'package:zero/app/modules/tv_screen/tv_screen_controller.dart'; // TV Screen Controller
 
+//--> Details Screen
+export 'package:zero/app/modules/details_screen/details_screen.dart';
+export 'package:zero/app/modules/details_screen/details_screen_binding.dart';
+export 'package:zero/app/modules/details_screen/details_screen_controller.dart';
+
 // Models
 export 'package:zero/app/data/models/movies/movies_list_response_model.dart'; // Movies Response Model
