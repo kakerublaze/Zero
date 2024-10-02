@@ -1,12 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/data/models/animes/trending_anime_response_model.dart';
-import 'package:zero/app/data/models/celebs/celebs_list_response_model.dart';
-import 'package:zero/app/data/models/series/series_list_response_model.dart';
 
 class HomeScreenController extends GetxController {
   RestServices restServices = RestServices();

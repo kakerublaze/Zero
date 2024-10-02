@@ -1,4 +1,3 @@
-import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:zero/app/core/utils/exports.dart';
 
 Future<void> main() async {

@@ -62,6 +62,17 @@ class TvScreen extends StatelessWidget {
                                 textAlign: TextAlign.left,
                               ),
                             ],
+                          ).onTap(
+                            () {
+                              Get.toNamed(
+                                Routes.detailsScreen,
+                                arguments: {
+                                  'id': item.id,
+                                  'origin': 'tv',
+                                  'title': item.title,
+                                },
+                              );
+                            },
                           );
                         },
                       ),

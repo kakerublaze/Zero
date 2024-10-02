@@ -41,7 +41,7 @@ class TrendingAnimeResponseModel {
 class TrendingAnimeData {
   String? id;
   int? malId;
-  Title? title;
+  AnimeTitle? title;
   String? status;
   String? image;
   String? imageHash;
@@ -81,7 +81,7 @@ class TrendingAnimeData {
   TrendingAnimeData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     malId = json['malId'];
-    title = json['title'] != null ? Title.fromJson(json['title']) : null;
+    title = json['title'] != null ? AnimeTitle.fromJson(json['title']) : null;
     status = json['status'];
     image = json['image'];
     imageHash = json['imageHash'];
@@ -125,15 +125,15 @@ class TrendingAnimeData {
   }
 }
 
-class Title {
+class AnimeTitle {
   String? romaji;
   String? english;
   String? native;
   String? userPreferred;
 
-  Title({this.romaji, this.english, this.native, this.userPreferred});
+  AnimeTitle({this.romaji, this.english, this.native, this.userPreferred});
 
-  Title.fromJson(Map<String, dynamic> json) {
+  AnimeTitle.fromJson(Map<String, dynamic> json) {
     romaji = json['romaji'];
     english = json['english'];
     native = json['native'];

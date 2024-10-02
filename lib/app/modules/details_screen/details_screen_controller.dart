@@ -1,9 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/data/models/details/movies_details_response_model.dart';
 
 class DetailsScreenController extends GetxController {
   Rx<bool> isScrolled = false.obs;
@@ -13,25 +10,49 @@ class DetailsScreenController extends GetxController {
   var token = dotenv.env['token'];
   Rx<MoviesDetailsResponseModel> moviesDetailsResponseModel =
       MoviesDetailsResponseModel().obs;
+  Rx<TVDetailsResponseModel> tvDetailsResponseModel =
+      TVDetailsResponseModel().obs;
 
   Future<void> getDetails() async {
-    await restServices
-        .getResponse(
-      uri: '${Endpoints.moviesDetails}/${getArguments['id']}',
-      method: Method.get,
-      token: token,
-      isMovie: true,
-    )
-        .then(
-      (response) {
-        moviesDetailsResponseModel.value = MoviesDetailsResponseModel.fromJson(
-          json.decode(
-            response,
-          ),
-        );
-        moviesDetailsResponseModel.refresh();
-      },
-    );
+    getArguments['origin'] == 'tv'
+        ? await restServices
+            .getResponse(
+            uri: Endpoints.asianTVInfo,
+            method: Method.get,
+            queryParameters: {
+              'id': '${getArguments['id']}',
+            },
+            token: token,
+            isMovie: false,
+          )
+            .then(
+            (response) {
+              tvDetailsResponseModel.value = TVDetailsResponseModel.fromJson(
+                json.decode(
+                  response,
+                ),
+              );
+              tvDetailsResponseModel.refresh();
+            },
+          )
+        : await restServices
+            .getResponse(
+            uri: '${Endpoints.moviesDetails}/${getArguments['id']}',
+            method: Method.get,
+            token: token,
+            isMovie: true,
+          )
+            .then(
+            (response) {
+              moviesDetailsResponseModel.value =
+                  MoviesDetailsResponseModel.fromJson(
+                json.decode(
+                  response,
+                ),
+              );
+              moviesDetailsResponseModel.refresh();
+            },
+          );
   }
 
   void _scrollListener() {

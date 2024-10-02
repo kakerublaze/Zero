@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/data/models/asian_tv/asian_tv_response_model.dart';
 
 class TVScreenController extends GetxController {
   RestServices restServices = RestServices();

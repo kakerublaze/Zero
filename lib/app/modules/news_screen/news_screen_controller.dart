@@ -1,8 +1,5 @@
 import 'dart:convert';
-
-import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
-import 'package:zero/app/data/models/news/news_list_response_model.dart';
 
 class NewsScreenController extends GetxController {
   RestServices restServices = RestServices();

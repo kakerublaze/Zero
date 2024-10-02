@@ -1,5 +1,4 @@
 import 'package:http/http.dart' as http;
-import 'package:zero/app/core/constants/endpoints.dart';
 import 'package:zero/app/core/utils/exports.dart';
 
 class RestServices {
