@@ -12,8 +12,10 @@ class DetailsScreenController extends GetxController {
       MoviesDetailsResponseModel().obs;
   Rx<TVDetailsResponseModel> tvDetailsResponseModel =
       TVDetailsResponseModel().obs;
+  RxMap<String, bool> loadingStates = <String, bool>{}.obs;
 
   Future<void> getDetails() async {
+    loadingStates['data'] = true;
     getArguments['origin'] == 'tv'
         ? await restServices
             .getResponse(
@@ -53,13 +55,15 @@ class DetailsScreenController extends GetxController {
               moviesDetailsResponseModel.refresh();
             },
           );
+    loadingStates['data'] = false;
+    loadingStates.refresh();
   }
 
   void _scrollListener() {
     debugPrint(
       scrollController.position.pixels.toString(),
     );
-    if (scrollController.position.pixels >= 140) {
+    if (scrollController.position.pixels >= 180) {
       isScrolled.value = true;
       isScrolled.refresh();
     } else {
