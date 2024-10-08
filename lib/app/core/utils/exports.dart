@@ -69,9 +69,11 @@ export 'package:zero/app/global_widgets/shimmers/tv_screen_shimmer_widget.dart';
 export 'package:zero/app/modules/tv_screen/tv_screen_controller.dart'; // TV Screen Controller
 
 //--> Details Screen
-export 'package:zero/app/modules/details_screen/details_screen.dart';
-export 'package:zero/app/modules/details_screen/details_screen_binding.dart';
-export 'package:zero/app/modules/details_screen/details_screen_controller.dart';
+export 'package:zero/app/modules/tv_screen/tv_details_screen/details_screen.dart';  // Shows Details Page
+export 'package:zero/app/modules/tv_screen/tv_details_screen/details_screen_binding.dart'; // Shows Details Binding Page
+export 'package:zero/app/modules/tv_screen/tv_details_screen/details_screen_controller.dart'; // Shows Details Controller
+export 'package:zero/app/modules/tv_screen/tv_episodes_screen/tv_episodes_screen_controller.dart';  // TV Episodes List Controller
+
 
 // Models
 export 'package:zero/app/data/models/movies/movies_list_response_model.dart'; // Movies Response Model

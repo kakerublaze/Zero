@@ -8,8 +8,6 @@ class DetailsScreenController extends GetxController {
   RestServices restServices = RestServices();
   Map<String, dynamic> getArguments = {};
   var token = dotenv.env['token'];
-  Rx<MoviesDetailsResponseModel> moviesDetailsResponseModel =
-      MoviesDetailsResponseModel().obs;
   Rx<TVDetailsResponseModel> tvDetailsResponseModel =
       TVDetailsResponseModel().obs;
   late YoutubePlayerController youtubePlayerController;
@@ -22,45 +20,26 @@ class DetailsScreenController extends GetxController {
 
   Future<void> getDetails() async {
     loadingStates['data'] = true;
-    getArguments['origin'] == 'tv'
-        ? await restServices
-            .getResponse(
-            uri: Endpoints.asianTVInfo,
-            method: Method.get,
-            queryParameters: {
-              'id': '${getArguments['id']}',
-            },
-            token: token,
-            isMovie: false,
-          )
-            .then(
-            (response) {
-              tvDetailsResponseModel.value = TVDetailsResponseModel.fromJson(
-                json.decode(
-                  response,
-                ),
-              );
-              tvDetailsResponseModel.refresh();
-            },
-          )
-        : await restServices
-            .getResponse(
-            uri: '${Endpoints.moviesDetails}/${getArguments['id']}',
-            method: Method.get,
-            token: token,
-            isMovie: true,
-          )
-            .then(
-            (response) {
-              moviesDetailsResponseModel.value =
-                  MoviesDetailsResponseModel.fromJson(
-                json.decode(
-                  response,
-                ),
-              );
-              moviesDetailsResponseModel.refresh();
-            },
-          );
+    await restServices
+        .getResponse(
+      uri: Endpoints.asianTVInfo,
+      method: Method.get,
+      queryParameters: {
+        'id': '${getArguments['id']}',
+      },
+      token: token,
+      isMovie: false,
+    )
+        .then(
+      (response) {
+        tvDetailsResponseModel.value = TVDetailsResponseModel.fromJson(
+          json.decode(
+            response,
+          ),
+        );
+        tvDetailsResponseModel.refresh();
+      },
+    );
     loadingStates['data'] = false;
     loadingStates.refresh();
   }

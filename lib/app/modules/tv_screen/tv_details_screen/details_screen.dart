@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import '../../core/utils/exports.dart';
+import '../../../core/utils/exports.dart';
 
 class DetailsScreen extends StatelessWidget {
   const DetailsScreen({super.key});
