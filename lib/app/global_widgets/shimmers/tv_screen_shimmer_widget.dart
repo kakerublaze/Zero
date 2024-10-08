@@ -3,7 +3,7 @@ import 'package:zero/app/core/utils/exports.dart';
 Widget getTVScreenShimmer() {
   return GridView.builder(
     padding: const EdgeInsets.only(
-      top: 90,
+      top: 20,
     ),
     shrinkWrap: true,
     gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

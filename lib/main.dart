@@ -4,10 +4,10 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await DependencyInjector.init();
   await dotenv.load(fileName: "lib/.env");
-  SystemChrome.setPreferredOrientations(
-    [
-      DeviceOrientation.portraitUp,
-    ],
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      statusBarColor: Colors.blueAccent,
+    ),
   );
   runApp(
     const MyApp().onTap(

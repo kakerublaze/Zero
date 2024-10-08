@@ -76,12 +76,14 @@ class MainScreen extends StatelessWidget {
               ),
         body: Stack(
           children: [
-            SingleChildScrollView(
-              controller: controller.selectedIndex.value == 0
-                  ? controller.scrollController
-                  : null,
-              child: controller.tabs[controller.selectedIndex.value],
-            ),
+            controller.selectedIndex.value == 0
+                ? SingleChildScrollView(
+                    controller: controller.selectedIndex.value == 0
+                        ? controller.scrollController
+                        : null,
+                    child: controller.tabs[controller.selectedIndex.value],
+                  )
+                : controller.tabs[controller.selectedIndex.value],
             Positioned(
               bottom: 0,
               left: 0,

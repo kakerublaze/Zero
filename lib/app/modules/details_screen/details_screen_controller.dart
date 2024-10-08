@@ -12,6 +12,12 @@ class DetailsScreenController extends GetxController {
       MoviesDetailsResponseModel().obs;
   Rx<TVDetailsResponseModel> tvDetailsResponseModel =
       TVDetailsResponseModel().obs;
+  late YoutubePlayerController youtubePlayerController;
+  var isPlayerReady = false.obs;
+  var videoMetaData = const YoutubeMetaData().obs;
+  var playerState = PlayerState.unknown.obs;
+  var muted = false.obs;
+  var isExpanded = false.obs;
   RxMap<String, bool> loadingStates = <String, bool>{}.obs;
 
   Future<void> getDetails() async {
@@ -63,13 +69,36 @@ class DetailsScreenController extends GetxController {
     debugPrint(
       scrollController.position.pixels.toString(),
     );
-    if (scrollController.position.pixels >= 180) {
+    if (scrollController.position.pixels >= 140) {
       isScrolled.value = true;
       isScrolled.refresh();
     } else {
       isScrolled.value = false;
       isScrolled.refresh();
     }
+  }
+
+  void listener() {
+    if (isPlayerReady.value &&
+        youtubePlayerController.value.isFullScreen == false) {
+      playerState.value = youtubePlayerController.value.playerState;
+      videoMetaData.value = youtubePlayerController.metadata;
+    }
+  }
+
+  void toggleMute() {
+    if (muted.value) {
+      youtubePlayerController.unMute();
+    } else {
+      youtubePlayerController.mute();
+    }
+    muted.value = !muted.value;
+  }
+
+  @override
+  void onClose() {
+    youtubePlayerController.dispose();
+    super.onClose();
   }
 
   @override
@@ -79,6 +108,19 @@ class DetailsScreenController extends GetxController {
     }
     if (getArguments['id'] != null) {
       await getDetails();
+      youtubePlayerController = YoutubePlayerController(
+        initialVideoId: tvDetailsResponseModel.value.trailer?.id ?? '',
+        flags: const YoutubePlayerFlags(
+          mute: false,
+          autoPlay: false,
+          disableDragSeek: true,
+          controlsVisibleAtStart: true,
+          loop: false,
+          isLive: false,
+          forceHD: true,
+          enableCaption: true,
+        ),
+      )..addListener(listener);
     }
     scrollController.addListener(_scrollListener);
     super.onInit();

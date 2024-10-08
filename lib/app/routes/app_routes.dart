@@ -17,4 +17,5 @@ abstract class Routes {
   static const newsDetails = '/newsDetails';
   static const airingSchedule = '/airingSchedule';
   static const detailsScreen = '/detailsScreen';
+  static const episodesScreen = '/episodesScreen';
 }

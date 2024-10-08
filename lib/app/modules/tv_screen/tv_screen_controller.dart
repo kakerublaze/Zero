@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:zero/app/core/utils/exports.dart';
 
 class TVScreenController extends GetxController {
@@ -8,7 +9,6 @@ class TVScreenController extends GetxController {
   RxInt currentPage = 1.obs;
   RxBool isLoadingMore = false.obs;
   RxBool isLoading = false.obs;
-  ScrollController scrollController = ScrollController();
 
   Future<void> getAsianTvData() async {
     if (asianTvResponseModel.value.hasNextPage != null) {
@@ -41,10 +41,13 @@ class TVScreenController extends GetxController {
   @override
   Future<void> onInit() async {
     await getAsianTvData();
-    scrollController.addListener(
+    Get.find<MainScreenController>().scrollController.addListener(
       () async {
-        if (scrollController.position.pixels >=
-                scrollController.position.maxScrollExtent &&
+        if (Get.find<MainScreenController>().scrollController.position.pixels >=
+                Get.find<MainScreenController>()
+                    .scrollController
+                    .position
+                    .maxScrollExtent &&
             !isLoadingMore.value) {
           await getAsianTvData();
         }

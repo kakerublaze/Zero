@@ -7,6 +7,8 @@ export 'package:google_fonts/google_fonts.dart'; // Google Fonts for better font
 export 'package:logger/logger.dart'; // Logger
 export 'package:flutter_dotenv/flutter_dotenv.dart'; // Creating Environment File
 export 'package:carousel_slider/carousel_slider.dart'; // Carousel Slider
+export 'package:youtube_player_flutter/youtube_player_flutter.dart'; // Youtube Embbed Player
+
 
 //-->Default Flutter Packages
 export 'package:flutter/material.dart'; // Material Package for stl/stf & default widgets
@@ -18,6 +20,7 @@ export 'package:zero/app/core/utils/helpers/dependency_injectors.dart'; // Depen
 export 'package:zero/app/core/utils/helpers/hex_color_coverter.dart'; // Hex Color Converter
 export 'package:zero/app/core/utils/helpers/global_variables.dart'; // Global Variable's
 export 'package:zero/app/core/utils/helpers/image_helper.dart'; // Image Helper
+export 'package:zero/app/global_widgets/text/remove_html_tags.dart'; // Remove HTML Tag's
 
 //--> App Constanst
 export 'package:zero/app/core/constants/app_colors.dart'; // App Color's
